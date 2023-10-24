@@ -1,0 +1,9 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.microsoftonline.com/11789008-c321-4d2d-93a5-ee89a32bef09/v2.0
+server:
+  port: 8080
+
