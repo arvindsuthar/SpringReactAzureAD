@@ -1,12 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\react-spa\\src",
+    "\\react-spa",
+    "\\SpringAPI",
+    "\\SpringAPI\\src",
     "\\SpringAPI\\src\\main",
     "\\SpringAPI\\src\\main\\java",
     "\\SpringAPI\\src\\main\\java\\com",
     "\\SpringAPI\\src\\main\\java\\com\\orka",
     "\\SpringAPI\\src\\main\\java\\com\\orka\\springapi"
   ],
+  "SelectedNode": "\\SpringAPI\\src\\main\\java\\com\\orka\\springapi\\WelcomeController.java",
   "PreviewInSolutionExplorer": false
 }

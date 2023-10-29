@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { PageLayout } from './components/PageLayout';
 import { loginRequest } from './authConfig';
 import { callMsGraph } from './graph';
-import { callSpringBoot } from './springboot';
+import { callSpringBootForRole, callSpringBootForAuthorities } from './springboot';
 import { ProfileData } from './components/ProfileData';
 import { SpringBootData } from './components/SpringBootData';
 
@@ -17,7 +17,8 @@ import Button from 'react-bootstrap/Button';
 
 const SpringBootContent = () => {
     const { instance, accounts } = useMsal();
-    const [springBootData, setSpringBootData] = useState(null);
+    const [springBootRole, setSpringBootRole] = useState(null);
+    const [springBootAuthorities, setSpringBootAuthorities] = useState(null);
     function RequestSpringBootData() {
         // Silently acquire an access token which is then attached to a request for Spring Boot Content
         instance
@@ -26,17 +27,17 @@ const SpringBootContent = () => {
                 account: accounts[0],
             })
             .then((response) => {
-                // the access token currently comes with the Graph audience, which Spring Boot does not like
-                // we use ID token here as it has with the proper audience which Spring Boot will accept
-                // to get more granular with delegated permissions and/or app roles will just require separate client and API apps
-                callSpringBoot(response.idToken).then((response) => setSpringBootData(response));
+                // the access token comes with the ReactAPI audience, Admin or User role, and issuerURI from the application
+                debugger;
+                callSpringBootForRole(response.accessToken).then((response) => setSpringBootRole(response));
+                callSpringBootForAuthorities(response.accessToken).then((response) => setSpringBootAuthorities(response));
             });
     }
     return (
         <>
             <h5 className="profileContent">Spring Boot Data for {accounts[0].name}</h5>
-            {springBootData ? (
-                <SpringBootData springBootData={springBootData} />
+            {springBootRole ? (
+                <SpringBootData springBootRole={springBootRole} springBootAuthorities={springBootAuthorities} />
             ) : (
                 <Button variant="secondary" onClick={RequestSpringBootData}>
                     Request Spring Boot Data
@@ -88,7 +89,6 @@ const MainContent = () => {
         <div className="App">
             <AuthenticatedTemplate>
                 <SpringBootContent />
-                <ProfileContent />
             </AuthenticatedTemplate>
 
             <UnauthenticatedTemplate>
