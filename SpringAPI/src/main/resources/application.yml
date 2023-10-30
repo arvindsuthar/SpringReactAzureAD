@@ -4,6 +4,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://login.microsoftonline.com/11789008-c321-4d2d-93a5-ee89a32bef09/v2.0
+          audiences: b15d22a5-9cd9-4d8d-b1fc-1fd0bd48989a
 server:
   port: 8080
 
