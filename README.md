@@ -11,16 +11,15 @@
 * https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-single-page-app-react-sign-in
 
 Here is the Azure AD tenant used in this sample (see [screenshots at the end](#key-aspects-of-the-azure-ad-configuration)):
-1. tenant name: Orka
-2. tenant domain: orkadev.onmicrosoft.com
-3. tenant id: 11789008-c321-4d2d-93a5-ee89a32bef09
-4. tenant admin: admin@orkadev.onmicrosoft.com
+
+    tenant id: 11789008-c321-4d2d-93a5-ee89a32bef09
 
 Here is information about the Azure AD application registered for this sample:
-1. display name: ReactClient
-2. supported account types: multi-tenant
-3. redirect uri (SPA) http://localhost:3000/
-4. app id (client id): 7169848a-25f2-4fdd-900c-fa3464b15415
+
+    display name: ReactClient
+    supported account types: multi-tenant
+    redirect uri (SPA) http://localhost:3000/
+    app id (client id): 7169848a-25f2-4fdd-900c-fa3464b15415
 
 ## Set up a minimal Spring Boot OAuth2 Resource Server:
 For me, the *last 3 minutes* of this "Java Techie" video were helpful in setting up a minimal Spring Boot app.
@@ -72,22 +71,20 @@ You will notice that there is one more non-standard piece in the Bean above: the
     }
 
 ## Key aspects of the Azure AD Configuration
-### The OrkaDev tenant
-Log in to the [Azure Portal](https://portal.azure.com) with your OrkaDev tenant admin credentials and navigate to "Manage Microsoft Entra ID". This tenant contains the "App registration" for the "ReactClient" application. This tenant is also used by the Spring Boot application to validate tokens.
-1. tenant name: Orka
-2. tenant domain: orkadev.onmicrosoft.com
-3. tenant id: 11789008-c321-4d2d-93a5-ee89a32bef09
-4. tenant admin: admin@orkadev.onmicrosoft.com
+### The tenant
+Log in to the [Azure Portal](https://portal.azure.com) with your tenant admin credentials and navigate to "Manage Microsoft Entra ID". This tenant contains the "App registration" for the "ReactClient" application. This tenant is also used by the Spring Boot application to validate tokens.
+    
+    tenant id: 11789008-c321-4d2d-93a5-ee89a32bef09
  
-![the OrkaDev tenant](./docimages/tenant.png)
+![the tenant](./docimages/tenant.png)
 
-### The ReactClient App Registration in the OrkaDev tenant
+### The ReactClient App Registration in the tenant
 Navigate to "App registrations" and you should see a ReactClient entry. Select that entry and you should see the screenshot below. This is where you configure the ReactClient app. As you can see, there are no configured "Client credentials" because this is a Public Client application that can only perform authentication on behalf of a user and operate with delegated permissions conveyed by that user. Here is where you can configure delegated and application permissions (under API permissions) should you wish to empower this application to do more than just login. These permissions will show up in the token as claims that your app can use to make authorization decisions.
 
 ![the ReactClient App Registration](./docimages/appregistration.png)
 
-### The ReactClient Enterprise Application in the OrkaDev tenant
-ReactClient is a *multi-tenant* application. This means that when you log into the ReactClient application, a Service Principal is created in your directory. That Service Principal in the OrkaDev tenant is the "Enterprise Application" in the screenshot below. This is where you can see the permissions that this app has in *your tenant*. Deleting this Enterprise Application will result in seeing the consent prompt next time you login with an OrkaDev account to the ReactClient application.
+### The ReactClient Enterprise Application in the tenant
+ReactClient is a *multi-tenant* application. This means that when you log into the ReactClient application, a Service Principal is created in your directory. That Service Principal in the tenant is the "Enterprise Application" in the screenshot below. This is where you can see the permissions that this app has in *your tenant*. Deleting this Enterprise Application will result in seeing the consent prompt next time you login with an account to the ReactClient application.
 
 ![the ReactClient Enterprise Application](./docimages/enterpriseapp.png)
 
@@ -95,6 +92,6 @@ In this case we can see that the ReactClient Enterprise Application has minimal 
 
 ![the ReactClient Enterprise Application permissions](./docimages/enterpriseapppermissions.png)
 
-### The ReactAPI App Registration in the OrkaDev tenant
-And finally you will see the ReactAPI in the OrkaDev tenant. Under App roles, you can see the Admins and Users app roles. The "Expose an API" tab contains the "Basic" scope definition that the ReactClient app registration is configured to access. We also add the ReactClient app ID under the "Authorized client applications" tab to reduce the need for another consent prompt when users call the ReactAPI through the ReactClient.
+### The ReactAPI App Registration in the tenant
+And finally you will see the ReactAPI in the tenant. Under App roles, you can see the Admins and Users app roles. The "Expose an API" tab contains the "Basic" scope definition that the ReactClient app registration is configured to access. We also add the ReactClient app ID under the "Authorized client applications" tab to reduce the need for another consent prompt when users call the ReactAPI through the ReactClient.
 ![the ReactAPI App registration](./docimages/reactapiappreg.png)
