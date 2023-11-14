@@ -5,7 +5,7 @@
     * Platform: Single Page Application
     * Client: Public Client
     * Flow: Authorization Code Flow with PKCE
-2. A Spring Boot resource server validating a passed identity token to protect am API endpoint
+2. A Spring Boot resource server validating a passed identity token to protect an API endpoint
 
 ## Setup a simple React client to authenticate to Azure AD:
 * https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-single-page-app-react-sign-in
